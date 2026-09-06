@@ -67,11 +67,10 @@ def send_alarm_notification():
     message = (
         "🚨 Алармата се задейства!\n\n"
         "👉 Искаш ли да я изключиш?\n"
-        f"http://{SERVER_IP}:{PORT}/control"
+        "https://beey-keey.github.io/smart-alarm-system/"
     )
 
     send_telegram_message(message)
-
 
 # === AUTHENTICATION ===
 
