@@ -3,6 +3,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const API_URL = import.meta.env.VITE_API_URL
 
 const alarms = ref([])
 const alarmStatus = ref('')
@@ -20,7 +21,7 @@ async function loadAlarms() {
   }
 
   try {
-    const response = await fetch('http://localhost:8000/alarms', {
+    const response = await fetch(`${API_URL}/alarms`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -45,7 +46,7 @@ async function loadAlarms() {
 
 async function loadStatus() {
   try {
-    const response = await fetch('http://localhost:8000/status')
+    const response = await fetch(`${API_URL}/status`)
 
     if (!response.ok) {
       errorMessage.value = 'Failed to load alarm status'
@@ -61,7 +62,7 @@ async function loadStatus() {
 
 async function changeAlarmStatus(action) {
   try {
-    const response = await fetch(`http://localhost:8000/${action}`, {
+    const response = await fetch(`${API_URL}/${action}`, {
       method: 'POST',
     })
 

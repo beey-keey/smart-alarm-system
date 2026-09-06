@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const username = ref('')
 const password = ref('')
 const errorMessage = ref('')
@@ -14,7 +16,7 @@ async function login() {
   isLoggingIn.value = true
 
   try {
-    const response = await fetch('http://localhost:8000/login', {
+    const response = await fetch(`${API_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
