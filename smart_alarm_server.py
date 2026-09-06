@@ -4,6 +4,8 @@ import requests
 import os
 from dotenv import load_dotenv
 
+from pydantic import BaseModel
+
 from fastapi import FastAPI, Request, Header, HTTPException, Depends
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -148,13 +150,14 @@ async def receive_alarm(
 
 
 # === LOGIN ===
+class LoginRequest(BaseModel):
+    username: str
+    password: str
 
 @app.post("/login")
-async def login(request: Request):
-    data = await request.json()
-
-    username = data.get("username")
-    password = data.get("password")
+async def login(data: LoginRequest):
+    username = data.username
+    password = data.password
 
     if username != USERNAME or password != PASSWORD:
         raise HTTPException(
@@ -176,7 +179,6 @@ async def login(request: Request):
     return {
         "access_token": token
     }
-
 
 # === ACTIVATE ALARM ===
 
